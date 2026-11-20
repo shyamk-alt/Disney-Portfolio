@@ -181,7 +181,7 @@ export default function App() {
         <motion.i style={{ scaleX: scrollRaw }} />
       </div>
 
-      <main className="film-track" aria-label="Lohitha Damisetti — portfolio film" />
+      <main className="film-track" aria-label="AZAHRA PUTRI NUR'AINI — portfolio film" />
     </>
   );
 }

@@ -1,6 +1,6 @@
-# ✨ The Kingdom of Lohitha — a scroll-to-play portfolio film
+# ✨ AZAHRA PUTRI NUR'AINI — a scroll-to-play fairytale portfolio
 
-My developer portfolio told as a fairy-tale film. Scroll down to play the story forward, scroll up to rewind. Chapters for About, Education, Skills, Projects, Achievements, Experience and Contact appear inside the scenes.
+A portfolio told as a fairy-tale film. Scroll down to play the story forward, scroll up to rewind. Chapters for About, Education, Skills, Projects, Achievements, Experience and Contact appear inside the scenes.
 
 **Built with:** React · TypeScript · Vite · Framer Motion · Lenis
 **Visuals:** original characters and world, created with AI (ChatGPT images + Google Flow video)
@@ -17,7 +17,8 @@ npm run build   # output in dist/
 ```
 
 ## Edit content
-- `src/data/portfolio.ts` — projects, skills, achievements, links
+- `src/data/portfolio.ts` — name, contact, education, skills, work, achievements, experience (`[Add Here]` marks what is still missing)
+- `public/princess.png` — the picture shown in Contact Me
 - `src/data/film.ts` — what appears when, and where
 - `public/film/` — film frames (hd = 1920×1080, sd = 1280×720)
 

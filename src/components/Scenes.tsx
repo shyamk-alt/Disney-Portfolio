@@ -1,5 +1,5 @@
 import { motion, MotionValue, useTransform } from "framer-motion";
-import { ReactNode } from "react";
+import { Fragment, ReactNode } from "react";
 import { portfolio } from "../data/portfolio";
 import type { Scene } from "../data/film";
 
@@ -55,64 +55,58 @@ function Letter({ c, p, s }: { c: string; p: MotionValue<number>; s: number }) {
   );
 }
 
-const Gh = () => (
+const MailIcon = () => (
   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-    <path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21" />
+    <rect x="3" y="5" width="18" height="14" rx="2.5" />
+    <path d="M3.5 7.5l8.5 6 8.5-6" />
+  </svg>
+);
+
+const ChatIcon = () => (
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <path d="M20.5 11.5a8.5 8.5 0 0 1-12.6 7.4L3.5 20.5l1.6-4.2A8.5 8.5 0 1 1 20.5 11.5z" />
+    <path d="M9 8.5c0 3.5 3 6.5 6.5 6.5l1-1.6-2-1-1 .8a4 4 0 0 1-2-2l.8-1-1-2z" />
   </svg>
 );
 
 /* ------------------------------------------------------------------ */
 /* Skill constellations: words drift through the sky at different depths */
 type Word = { t: string; x: number; y: number; size: number; depth: number; label?: boolean };
-const S = portfolio.skills;
+const ADD_HERE = "[Add Here]";
 const clusters: Word[][] = [
-  // left side of the frame — Languages & Frontend
+  // left side of the frame — Writing & Creative work
   [
-    { t: "Languages", x: 6, y: 16, size: 1, depth: 0.6, label: true },
-    { t: "C++", x: 8, y: 26, size: 1.5, depth: 1 },
-    { t: "Java", x: 21, y: 24, size: 1.15, depth: 0.7 },
-    { t: "Python", x: 13, y: 34, size: 1.35, depth: 1.2 },
-    { t: "JavaScript", x: 25, y: 33, size: 1, depth: 0.8 },
-    { t: "SQL", x: 6, y: 41, size: 0.95, depth: 0.5 },
-    { t: "Frontend", x: 7, y: 56, size: 1, depth: 0.6, label: true },
-    { t: "React.js", x: 9, y: 66, size: 1.55, depth: 1.1 },
-    { t: "React Native", x: 22, y: 61, size: 1.05, depth: 0.7 },
-    { t: "Tailwind CSS", x: 18, y: 75, size: 1.1, depth: 0.9 },
-    { t: "HTML", x: 6, y: 80, size: 0.9, depth: 0.5 },
-    { t: "CSS", x: 30, y: 71, size: 0.9, depth: 0.6 },
+    { t: "Writing", x: 6, y: 16, size: 1, depth: 0.6, label: true },
+    { t: "Poetry", x: 8, y: 26, size: 1.6, depth: 1 },
+    { t: "Cipta Puisi", x: 22, y: 24, size: 1.1, depth: 0.7 },
+    { t: "Letter Writing", x: 13, y: 35, size: 1.35, depth: 1.2 },
+    { t: "Menulis Surat", x: 8, y: 43, size: 0.95, depth: 0.6 },
+    { t: "Creative Work", x: 7, y: 56, size: 1, depth: 0.6, label: true },
+    { t: "Creative Expression", x: 9, y: 66, size: 1.4, depth: 1.1 },
+    { t: "Seniman Karya", x: 18, y: 75, size: 1.05, depth: 0.8 },
   ],
-  // right side — Backend & Databases
+  // right side — History, Geography & Civics
   [
-    { t: "Backend", x: 70, y: 15, size: 1, depth: 0.6, label: true },
-    { t: "Node.js", x: 72, y: 25, size: 1.5, depth: 1.1 },
-    { t: "Express.js", x: 84, y: 21, size: 1.05, depth: 0.7 },
-    { t: "Spring Boot", x: 78, y: 33, size: 1.2, depth: 0.9 },
-    { t: "REST APIs", x: 68, y: 38, size: 0.95, depth: 0.5 },
-    { t: "Databases", x: 72, y: 56, size: 1, depth: 0.6, label: true },
-    { t: "MongoDB", x: 70, y: 66, size: 1.4, depth: 1.1 },
-    { t: "PostgreSQL", x: 82, y: 62, size: 1.2, depth: 0.8 },
-    { t: "MySQL", x: 86, y: 73, size: 0.95, depth: 0.5 },
-    { t: "MongoDB Atlas", x: 70, y: 77, size: 0.95, depth: 0.7 },
+    { t: "History & Geography", x: 66, y: 15, size: 1, depth: 0.6, label: true },
+    { t: "History", x: 72, y: 25, size: 1.55, depth: 1.1 },
+    { t: "Sejarah", x: 86, y: 21, size: 1.05, depth: 0.7 },
+    { t: "Geography", x: 70, y: 35, size: 1.4, depth: 0.9 },
+    { t: "Geografi", x: 85, y: 38, size: 1, depth: 0.6 },
+    { t: "Civics", x: 72, y: 56, size: 1, depth: 0.6, label: true },
+    { t: "PPKn", x: 70, y: 66, size: 1.5, depth: 1.1 },
+    { t: "Civics", x: 84, y: 64, size: 1.1, depth: 0.8 },
   ],
-  // lower band — Tools & Core concepts
+  // lower band — Competitions & what's still to come
   [
-    { t: "Tools & Craft", x: 8, y: 62, size: 1, depth: 0.6, label: true },
-    { t: "Docker", x: 9, y: 71, size: 1.35, depth: 1.1 },
-    { t: "Git", x: 22, y: 69, size: 1.1, depth: 0.8 },
-    { t: "Redis", x: 16, y: 80, size: 1.05, depth: 0.7 },
-    { t: "JWT", x: 30, y: 78, size: 0.9, depth: 0.5 },
-    { t: "Postman", x: 28, y: 87, size: 0.9, depth: 0.6 },
-    { t: "Electron.js", x: 7, y: 89, size: 0.95, depth: 0.7 },
-    { t: "Core Concepts", x: 66, y: 62, size: 1, depth: 0.6, label: true },
-    { t: "System Design", x: 66, y: 71, size: 1.35, depth: 1.1 },
-    { t: "DSA", x: 85, y: 69, size: 1.2, depth: 0.9 },
-    { t: "Machine Learning", x: 70, y: 80, size: 1.05, depth: 0.8 },
-    { t: "AI", x: 90, y: 79, size: 1.3, depth: 1.2 },
-    { t: "API Design", x: 64, y: 88, size: 0.9, depth: 0.5 },
-    { t: "OOP", x: 81, y: 88, size: 0.9, depth: 0.6 },
+    { t: "Competitions", x: 8, y: 62, size: 1, depth: 0.6, label: true },
+    { t: "National Olympiads", x: 9, y: 71, size: 1.3, depth: 1.1 },
+    { t: "Writing Contests", x: 14, y: 81, size: 1.1, depth: 0.8 },
+    { t: "Gold Medalist", x: 8, y: 90, size: 1, depth: 0.6 },
+    { t: "More Skills", x: 66, y: 62, size: 1, depth: 0.6, label: true },
+    { t: ADD_HERE, x: 66, y: 72, size: 1.4, depth: 1.1 },
+    { t: ADD_HERE, x: 80, y: 82, size: 1.1, depth: 0.8 },
   ],
 ];
-void S;
 
 const isPhone = typeof window !== "undefined" && window.innerWidth < 760;
 
@@ -151,7 +145,7 @@ export function SceneView({ s, p }: { s: Scene; p: MotionValue<number> }) {
     case "opening":
       return (
         <motion.div className="sc sc-center halo" style={env}>
-          <p className="t-eyebrow">A Damisetti Shamya Lohitha film</p>
+          <p className="t-eyebrow">An {P.name} film</p>
           <p className="t-meta">Scroll to begin</p>
         </motion.div>
       );
@@ -160,8 +154,15 @@ export function SceneView({ s, p }: { s: Scene; p: MotionValue<number> }) {
       return (
         <motion.div className="sc sc-lower halo" style={env}>
           <Beat p={p} a={a - 0.006} i={0} as="p" className="t-eyebrow">The Kingdom of</Beat>
-          <h1 className="h-hero">
-            <Letters text={P.shortName} p={p} a={a} span={0.018} />
+          <h1 className="h-hero h-name" aria-label={P.name}>
+            {P.heroWords.map((w, i) => (
+              <span key={w}>
+                {i > 0 && " "}
+                <span className="hw">
+                  <Letters text={w} p={p} a={a + i * 0.0045} span={0.012} />
+                </span>
+              </span>
+            ))}
           </h1>
         </motion.div>
       );
@@ -185,14 +186,15 @@ export function SceneView({ s, p }: { s: Scene; p: MotionValue<number> }) {
             <Letters text="About Me" p={p} a={a} span={0.012} />
           </h2>
           <Beat p={p} a={a} i={3} as="p" className="comp-lead">
-            Full Stack Developer crafting scalable apps with <b>React</b>, <b>Node.js</b> &amp; <b>AI</b> — strong in API development, system design and problem solving.
+            A student of <b>{P.school}</b>, {P.province} — a <b>poet</b>, <b>letter writer</b> and national gold medalist in <b>History</b> &amp; <b>Geography</b>.
           </Beat>
           <Beat p={p} a={a} i={5} className="comp-stats">
-            <div><b>9.07</b><span>CGPA</span></div>
-            <em />
-            <div><b>1,230+</b><span>Problems solved</span></div>
-            <em />
-            <div><b>3</b><span>AI products</span></div>
+            {P.stats.map((s, i) => (
+              <Fragment key={s.label}>
+                {i > 0 && <em />}
+                <div><b>{s.value}</b><span>{s.label}</span></div>
+              </Fragment>
+            ))}
           </Beat>
         </motion.div>
       );
@@ -212,19 +214,15 @@ export function SceneView({ s, p }: { s: Scene; p: MotionValue<number> }) {
           <h2 className="h-section">
             <Letters text="Education" p={p} a={a} span={0.012} />
           </h2>
-          <Beat p={p} a={a} i={3} className="edu-line">
-            <span className="edu-year">2023 — 2027</span>
-            <p className="edu-title">B.Tech in Data Science</p>
-            <p className="edu-place">Aditya College of Engineering and Technology</p>
-            <span className="pill-glass">CGPA 9.07</span>
-          </Beat>
-          <Beat p={p} a={a} i={6} className="edu-line">
-            <span className="edu-year">2021 — 2023</span>
-            <p className="edu-title">Intermediate (MPC)</p>
-            <p className="edu-place">Sri Chaitanya Junior College, Kakinada</p>
-            <span className="pill-glass">90.60%</span>
-          </Beat>
-          <Beat p={p} a={a} i={9} as="p" className="edu-honour">✦ Department Topper — Data Science ✦</Beat>
+          {P.education.map((e, i) => (
+            <Beat key={e.title} p={p} a={a} i={3 + i * 3} className="edu-line">
+              <span className="edu-year">{e.year}</span>
+              <p className="edu-title">{e.title}</p>
+              <p className="edu-place">{e.place}</p>
+              {e.pill && <span className="pill-glass">{e.pill}</span>}
+            </Beat>
+          ))}
+          <Beat p={p} a={a} i={9} as="p" className="edu-honour">✦ {P.educationHonour} ✦</Beat>
         </motion.div>
       );
 
@@ -232,7 +230,7 @@ export function SceneView({ s, p }: { s: Scene; p: MotionValue<number> }) {
       return (
         <div className="sc-field">
           {clusters[s.cluster].map((w, i) => (
-            <SkillWord key={w.t} w={w} p={p} a={a} b={b} i={i} n={clusters[s.cluster].length} />
+            <SkillWord key={`${i}-${w.t}`} w={w} p={p} a={a} b={b} i={i} n={clusters[s.cluster].length} />
           ))}
         </div>
       );
@@ -248,12 +246,16 @@ export function SceneView({ s, p }: { s: Scene; p: MotionValue<number> }) {
               <Beat p={p} a={a} i={2} as="h3" className="g-title">{pr.title}</Beat>
               <Beat p={p} a={a} i={3} as="p" className="g-body">{pr.summary}</Beat>
               <Beat p={p} a={a} i={4} className="g-tech">
-                {pr.tech.slice(0, 8).join("  ·  ")}
+                {pr.tags.join("  ·  ")}
               </Beat>
               <Beat p={p} a={a} i={5}>
-                <a className="g-link" href={pr.url} target="_blank" rel="noreferrer">
-                  <Gh /> View on GitHub <span aria-hidden>→</span>
-                </a>
+                {pr.url ? (
+                  <a className="g-link" href={pr.url} target="_blank" rel="noreferrer">
+                    View the work <span aria-hidden>→</span>
+                  </a>
+                ) : (
+                  <span className="g-link g-todo">Link to the work: {ADD_HERE}</span>
+                )}
               </Beat>
             </div>
           </Glass>
@@ -269,12 +271,13 @@ export function SceneView({ s, p }: { s: Scene; p: MotionValue<number> }) {
             <Letters text="Achievements" p={p} a={a} span={0.014} />
           </h2>
           <Beat p={p} a={a} i={3} className="ach-big">
-            <b>1,230+</b>
-            <span>problems solved</span>
+            <b>{P.achievements.big.value}</b>
+            <span>{P.achievements.big.label}</span>
           </Beat>
-          <Beat p={p} a={a} i={5} as="p" className="ach-meta">LeetCode 450+ &nbsp;✦&nbsp; CodeChef 500+ &nbsp;✦&nbsp; GFG 280+ &nbsp;✦&nbsp; 20+ HackerRank stars</Beat>
-          <Beat p={p} a={a} i={7} as="p" className="ach-line"><span>Top 100 Team</span> Myntra WeForShe Hackerramp 2026</Beat>
-          <Beat p={p} a={a} i={8} as="p" className="ach-line"><span>Department Topper</span> Data Science Department</Beat>
+          <Beat p={p} a={a} i={4} as="p" className="ach-meta">{P.achievements.meta}</Beat>
+          {P.achievements.lines.map((l, i) => (
+            <Beat key={l.tag + l.text} p={p} a={a} i={5 + i} as="p" className="ach-line"><span>{l.tag}</span> {l.text}</Beat>
+          ))}
         </motion.div>
       );
 
@@ -285,14 +288,16 @@ export function SceneView({ s, p }: { s: Scene; p: MotionValue<number> }) {
           <h2 className="h-section">
             <Letters text="Experience" p={p} a={a} span={0.012} />
           </h2>
-          <Beat p={p} a={a} i={3} className="edu-line">
-            <span className="edu-year">May — June 2026</span>
-            <p className="edu-title">Full Stack Development Intern</p>
-            <p className="edu-place">Technical Hub Pvt Ltd · web &amp; mobile apps with React Native</p>
-          </Beat>
-          <Beat p={p} a={a} i={6} as="p" className="cert-head">Certified by</Beat>
-          <Beat p={p} a={a} i={7} as="p" className="cert-roll">
-            {P.certifications.map((c) => c.name).join("  ✦  ")}
+          {P.experience.map((x, i) => (
+            <Beat key={x.title} p={p} a={a} i={3 + i * 2} className="edu-line">
+              <span className="edu-year">{x.period}</span>
+              <p className="edu-title">{x.title}</p>
+              <p className="edu-place">{x.place}</p>
+            </Beat>
+          ))}
+          <Beat p={p} a={a} i={7} as="p" className="cert-head">Competed at</Beat>
+          <Beat p={p} a={a} i={8} as="p" className="cert-roll">
+            {P.competedAt.join("  ✦  ")}  ✦  Internship / organisation: {ADD_HERE}
           </Beat>
         </motion.div>
       );
@@ -301,19 +306,33 @@ export function SceneView({ s, p }: { s: Scene; p: MotionValue<number> }) {
       return (
         <motion.div className="sc sc-center halo-strong" style={env}>
           <Beat p={p} a={a - 0.006} i={0} as="p" className="h-eyebrow">✦ Epilogue ✦</Beat>
-          <h2 className="h-chapter">
+          <h2 className="h-chapter ct-h">
             <Letters text="Contact Me" p={p} a={a} />
           </h2>
-          <Beat p={p} a={a} i={4} as="p" className="ct-lead">The next chapter begins with you — open to internships, full-time roles &amp; ambitious collaborations.</Beat>
-          <Beat p={p} a={a} i={6}>
+          <Beat p={p} a={a} i={3}>
             <a className="ct-mail" href={`mailto:${P.contact.email}`}>{P.contact.email}</a>
           </Beat>
-          <Beat p={p} a={a} i={8} className="ct-links">
-            <a className="pill-glass link" href={P.contact.github} target="_blank" rel="noreferrer"><Gh /> GitHub</a>
-            <a className="pill-glass link" href={P.contact.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
-            <a className="pill-glass link" href="/Lohitha-Damisetti-Resume.pdf" target="_blank" rel="noreferrer">Résumé</a>
+          <Beat p={p} a={a} i={4}>
+            <a className="ct-mail ct-phone" href={`tel:${P.contact.phoneTel}`}>{P.contact.phone}</a>
           </Beat>
-          <Beat p={p} a={a} i={10} as="p" className="ct-credit">© 2026 {P.name} · Visuals created with AI (Google Gemini)</Beat>
+          <Beat p={p} a={a} i={5} className="ct-pic">
+            <span className="ct-fw" aria-hidden>
+              <i /><i /><i /><i /><i /><i />
+            </span>
+            <img
+              className="ct-img"
+              src="princess.png"
+              alt={P.name}
+              onError={(e) => {
+                e.currentTarget.style.display = "none";
+              }}
+            />
+          </Beat>
+          <Beat p={p} a={a} i={7} className="ct-links">
+            <a className="pill-glass link" href={`mailto:${P.contact.email}`}><MailIcon /> Email</a>
+            <a className="pill-glass link" href={P.contact.whatsapp} target="_blank" rel="noreferrer"><ChatIcon /> WhatsApp</a>
+          </Beat>
+          <Beat p={p} a={a} i={9} as="p" className="ct-credit">© 2026 {P.name} · Visuals created with AI (Google Gemini)</Beat>
         </motion.div>
       );
   }
