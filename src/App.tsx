@@ -10,22 +10,34 @@ const RAMP = 0.016;
 const windows = scenes
   .filter((s) => s.kind !== "opening" && s.kind !== "contact")
   .map((s) => [s.at[0] + RAMP, s.at[1] - RAMP] as [number, number]);
-const cuts = Array.from(new Set([0, 1, ...windows.flat().map((v) => Math.min(1, Math.max(0, v)))])).sort((a, b) => a - b);
-const segs = cuts.slice(0, -1).map((a, i) => {
-  const b = cuts[i + 1];
-  const mid = (a + b) / 2;
-  const w = windows.some(([x, y]) => mid > x && mid < y) ? DWELL : 1;
-  return { a, b, w, len: (b - a) * w };
-});
-const TOTAL = segs.reduce((t, g) => t + g.len, 0);
+// The camera eases in and out of every dwell (no sudden speed change between sections).
+const EASE = 0.012; // film distance over which the camera eases between cruising and dwell speed
+const smooth = (t: number) => {
+  const c = Math.min(1, Math.max(0, t));
+  return c * c * (3 - 2 * c);
+};
+const STEPS = 8192;
+/** cum[i] = how much scrolling it takes to reach film step i */
+const cum = new Float64Array(STEPS + 1);
+for (let i = 1; i <= STEPS; i++) {
+  const f = (i - 0.5) / STEPS;
+  let d = Infinity; // distance to the nearest dwell window (0 when inside one)
+  for (const [x, y] of windows) d = Math.min(d, f < x ? x - f : f > y ? f - y : 0);
+  cum[i] = cum[i - 1] + (1 + (DWELL - 1) * (1 - smooth(d / EASE))) / STEPS;
+}
+const TOTAL = cum[STEPS];
 /** scroll position (0→1) → film position (0→1) */
 function toFilm(u: number) {
-  let t = Math.min(1, Math.max(0, u)) * TOTAL;
-  for (const g of segs) {
-    if (t <= g.len) return g.a + t / g.w;
-    t -= g.len;
+  const t = Math.min(1, Math.max(0, u)) * TOTAL;
+  let lo = 0;
+  let hi = STEPS;
+  while (hi - lo > 1) {
+    const mid = (lo + hi) >> 1;
+    if (cum[mid] <= t) lo = mid;
+    else hi = mid;
   }
-  return 1;
+  const span = cum[hi] - cum[lo];
+  return (lo + (span > 0 ? (t - cum[lo]) / span : 0)) / STEPS;
 }
 
 export default function App() {
